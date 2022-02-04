@@ -38,7 +38,7 @@ public class MakeTestData implements ApplicationRunner {
         userRepository.save(admin);
         userRepository.save(both);
 
-        Member m1 = new Member("xx","mail@k.dk","test123", "kurt","niels","3","3","o","k","23");
+        Member m1 = new Member("xx","mail@k.dk","test123", "kurt","niels","3","3",1,true,"23");
         m1.addRole(Role.USER);
         memberRepository.save(m1);
 

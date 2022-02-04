@@ -1,103 +1,98 @@
 package kea.sem3.jwtdemo.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 @Entity
 @DiscriminatorValue("MEMBER")
 public class Member extends BaseUser {
 
-    private String fornavn;
-    private String efternavn;
-    private String gade;
-    private String by;
-    private String zip;
-    private String approved;
-    private String ranking;
+    String firstName;
+    String lastName;
+    String street;
+    String city;
+    int zip;
+    boolean approved;
+    String ranking;
 
-
-    @Column(name="forNavn",length = 60, nullable = false )
-    private String forNavn;
-
-    @Column(name="efternavn",length = 60, nullable = false )
-    private String efternavn;
-
-    @Column(name="gade",length = 60, nullable = false )
-    private String gade;
-
-    @Column(name="by",length = 60, nullable = false )
-    private String by;
-
-    @Column(name="zip",length = 60, nullable = false )
-    private String zip;
-
-    @Column(name="approved",length = 60, nullable = false )
-    private String approved;
-
-    @Column(name="ranking",length = 60, nullable = false )
-    private String ranking;
-
-
-    public Member(String username, String email, String password, String forNavn, String efternavn, String gade, String by, String zip, String approved, String ranking) {
+    public Member(String username, String email, String password, String firstName) {
         super(username, email, password);
-        this.forNavn = forNavn;
-        this.efternavn = efternavn;
-        this.gade = gade;
-        this.by = by;
-        this.zip = zip;
-        this.approved = approved;
-        this.ranking = ranking;
+        this.firstName = firstName;
     }
 
     public Member() {
     }
 
-    public String getForNavn() {
-        return forNavn;
+    @Column
+    @CreationTimestamp
+    private LocalDateTime created;
+
+    @Column
+    @UpdateTimestamp
+    private LocalDateTime lastEdited;
+
+    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, int zip, boolean approved, String ranking) {
+        super(username, email, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
+        this.approved = approved;
+        this.ranking = ranking;
     }
 
-    public void setForNavn(String forNavn) {
-        this.forNavn = forNavn;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getEfternavn() {
-        return efternavn;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setEfternavn(String efternavn) {
-        this.efternavn = efternavn;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getGade() {
-        return gade;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setGade(String gade) {
-        this.gade = gade;
+    public String getStreet() {
+        return street;
     }
 
-    public String getBy() {
-        return by;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public void setBy(String by) {
-        this.by = by;
+    public String getCity() {
+        return city;
     }
 
-    public String getZip() {
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
-    public String getApproved() {
+    public boolean isApproved() {
         return approved;
     }
 
-    public void setApproved(String approved) {
+    public void setApproved(boolean approved) {
         this.approved = approved;
     }
 
@@ -107,5 +102,21 @@ public class Member extends BaseUser {
 
     public void setRanking(String ranking) {
         this.ranking = ranking;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getLastEdited() {
+        return lastEdited;
+    }
+
+    public void setLastEdited(LocalDateTime lastEdited) {
+        this.lastEdited = lastEdited;
     }
 }
