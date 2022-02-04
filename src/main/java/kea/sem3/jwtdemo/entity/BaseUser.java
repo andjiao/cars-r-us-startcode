@@ -18,12 +18,14 @@ import java.util.List;
 @Getter
 @Setter
 @DiscriminatorValue("USER")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "user")
 public class BaseUser implements UserWithPassword {
 
    @Id
    private String username;
 
+   //Denne annotation validere, hvorvidt det faktisk er en mail
    @Email
    @Column(nullable = false, unique = true,length = 50)
    private String email;
