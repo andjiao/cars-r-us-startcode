@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("MEMBER")
@@ -118,5 +119,18 @@ public class Member extends BaseUser {
 
     public void setLastEdited(LocalDateTime lastEdited) {
         this.lastEdited = lastEdited;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return zip == member.zip && approved == member.approved && Objects.equals(firstName, member.firstName) && Objects.equals(lastName, member.lastName) && Objects.equals(street, member.street) && Objects.equals(city, member.city) && Objects.equals(ranking, member.ranking) && Objects.equals(created, member.created) && Objects.equals(lastEdited, member.lastEdited);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, street, city, zip, approved, ranking, created, lastEdited);
     }
 }

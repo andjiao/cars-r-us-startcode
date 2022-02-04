@@ -23,6 +23,4 @@ class MemberRepositoryTest {
         assertEquals(2, memberRepository.count());
 
     }
-
-    //lav caar-klassen, giv den et id
 }

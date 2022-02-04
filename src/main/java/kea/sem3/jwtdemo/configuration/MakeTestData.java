@@ -16,12 +16,12 @@ public class MakeTestData implements ApplicationRunner {
 
     UserRepository userRepository;
     MemberRepository memberRepository;
-    CarRepository cr;
+    CarRepository carRepository;
 
-    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository cr) {
+    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
-        this.cr = cr;
+        this.carRepository = carRepository;
     }
 
     public void makePlainUsers(){
@@ -56,11 +56,12 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeCar(){
-        Car c1 = new Car(1,"karen","niels","fie");
-        Car c2 = new Car(2,"kurt","alice","nisse");
 
-        cr.save(c1);
-        cr.save(c2);
+        Car c1 = new Car(1,"karen","niels","fie");
+        carRepository.save(c1);
+
+        Car c2 = new Car(2,"kurt","alice","nisse");
+        carRepository.save(c2);
 
     }
 
@@ -68,7 +69,7 @@ public class MakeTestData implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         userRepository.deleteAll();
-        cr.deleteAll();
+        carRepository.deleteAll();
 
         makePlainUsers();
 
