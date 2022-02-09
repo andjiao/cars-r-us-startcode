@@ -28,10 +28,10 @@ class CarRepositoryTest {
 
     @BeforeAll
     static void setUp(@Autowired CarRepository carRepository){
-        Car c1 = carRepository.save(new Car(3,"anne","æble","zebra"));
+        Car c1 = carRepository.save(new Car(3,"anne","æble",90.00,90.00));
         carId1=c1.getId();
 
-        carId2= carRepository.save(new Car(3,"yoghuret","påske","elfenben")).getId();
+        carId2= carRepository.save(new Car(3,"yoghuret","påske",00.00,09.00)).getId();
     }
 
         @Test
@@ -42,7 +42,7 @@ class CarRepositoryTest {
 
         @Test
     public void testAddCar(){
-        Car carNew = carRepository.save(new Car(5,"kalle","spiser","meget"));
+        Car carNew = carRepository.save(new Car(5,"kalle","spiser",90.00,80.00));
         assertEquals(4, carRepository.count());
         assertNotEquals(0,carNew.getId());
         }

@@ -1,6 +1,7 @@
 package kea.sem3.jwtdemo.entity;
 
 
+import kea.sem3.jwtdemo.dto.CarRequest;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,13 +27,25 @@ public class Car {
     private String model;
 
     @Column(name="pricePrDay", length=40, nullable=false)
-    private String pricePrDay;
+    private double pricePrDay;
 
-    public Car(int id, String brand, String model, String pricePrDay) {
+    private Double bestDiscount;
+
+
+    public Car(int id, String brand, String model, double pricePrDay, double discount) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
+        this.bestDiscount=discount;
+    }
+
+    public Car(CarRequest body) {
+        this.id = id;
+        this.brand = body.getBrand();
+        this.model = body.getModel();
+        this.pricePrDay = body.getPricePrDay();
+        this.bestDiscount= body.getPricePrDay();
     }
 
     public Car() {
@@ -46,6 +59,9 @@ public class Car {
     @Column(name="edited")
     @UpdateTimestamp
     private LocalDateTime dateEdited;
+
+
+
 
     public int getId() {
         return id;
@@ -71,11 +87,11 @@ public class Car {
         this.model = model;
     }
 
-    public String getPricePrDay() {
+    public double getPricePrDay() {
         return pricePrDay;
     }
 
-    public void setPricePrDay(String pricePrDay) {
+    public void setPricePrDay(double pricePrDay) {
         this.pricePrDay = pricePrDay;
     }
 
@@ -93,6 +109,15 @@ public class Car {
 
     public void setDateEdited(LocalDateTime dateEdited) {
         this.dateEdited = dateEdited;
+    }
+
+    public Double getBestDiscount() {
+        return bestDiscount;
+    }
+
+
+    public void setBestDiscount(Double bestDiscount) {
+        this.bestDiscount = bestDiscount;
     }
 
     public Car(int id, String brand) {

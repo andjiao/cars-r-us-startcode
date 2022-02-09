@@ -57,10 +57,10 @@ public class MakeTestData implements ApplicationRunner {
 
     public void makeCar(){
 
-        Car c1 = new Car(1,"karen","niels","fie");
+        Car c1 = new Car(1,"karen","niels",90.00,15.00);
         carRepository.save(c1);
 
-        Car c2 = new Car(2,"kurt","alice","nisse");
+        Car c2 = new Car(2,"kurt","alice",09.00,18.00);
         carRepository.save(c2);
 
     }
