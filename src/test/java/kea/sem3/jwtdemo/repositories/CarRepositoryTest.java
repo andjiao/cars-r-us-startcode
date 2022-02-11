@@ -45,7 +45,7 @@ class CarRepositoryTest {
         @Test
     public void testAddCar(){
         Car carNew = carRepository.save(new Car("kalle","spiser",90.00,80.00));
-        assertEquals(4, carRepository.count());
+        assertEquals(3, carRepository.count());
         assertNotEquals(0,carNew.getId());
         }
 

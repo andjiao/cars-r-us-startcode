@@ -15,12 +15,13 @@ class MemberRepositoryTest {
     MemberRepository memberRepository;
     @BeforeEach
     void setUp() {
+        memberRepository.deleteAll();
         memberRepository.save(new Member("niels","mail@k.dk","test123", "kurt","niels","3","3",1,true,"23"));
     }
 
     @Test
     public void testCount(){
-        assertEquals(2, memberRepository.count());
+        assertEquals(1, memberRepository.count());
 
     }
 }

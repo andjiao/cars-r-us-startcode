@@ -24,21 +24,23 @@ class CarServiceInMemoryTest
     @Autowired
     CarRepository carRepository;
 
-    CarService carService;
+    static CarService carService;
 
     static int car1Id, car2Id;
 /* @BeforeEach: Denne annotation, sørger for at data rolles tilabge*/
    @BeforeAll
     static void setup(@Autowired CarRepository carRepository ){
        /*Hvis ting ikke virker gør sådan: carRepository.deleteAll(); */
+       carRepository.deleteAll();
+       carService = new CarService(carRepository);
         car1Id = carRepository.save(new Car("Volvo", "C40", 560,10)).getId();
         car2Id = carRepository.save(new Car("WW", "Up", 300,10)).getId();
     }
 
-    @BeforeEach
+   /* @BeforeEach
     void setService(){
         carService = new CarService(carRepository);
-    }
+    }*/
 
     @Test
     void getCars() {
@@ -66,5 +68,31 @@ class CarServiceInMemoryTest
     @Test
     void deleteCar() {
     }
+
+
+    /* @Test
+    public void editCar() throws Exception {
+        //New price and discount for the ford
+        CarRequest carToEdit = new CarRequest("Ford", "Focus", 500, 20);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/cars/" + carFordId)
+                        .contentType("application/json")
+                        .accept("application/json")
+                        .content(objectMapper.writeValueAsString(carToEdit)))
+                .andExpect(status().isOk());
+        Car editedCarFromDB = carRepository.findById(carFordId).orElse(null);
+        assertEquals(500, editedCarFromDB.getPricePrDay());
+        assertEquals(20, editedCarFromDB.getBestDiscount());
+    }
+
+    @Test
+    void deleteCar() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/" + carFordId))
+                .andExpect(status().isOk());
+        //Verify that we only have one car in the database
+        assertEquals(1, carRepository.count());
+    }*/
+
+
 }
 
