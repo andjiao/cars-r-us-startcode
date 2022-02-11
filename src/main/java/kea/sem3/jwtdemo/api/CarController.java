@@ -24,7 +24,7 @@ import java.util.List;
         }
 
         @GetMapping("/{id}")
-        public CarResponse getCars(@PathVariable int id) throws Exception {
+        public CarResponse getCar(@PathVariable int id) throws Exception {
 
             return carService.getCar(id,false);}
 

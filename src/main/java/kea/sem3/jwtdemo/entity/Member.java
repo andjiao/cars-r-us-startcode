@@ -1,5 +1,6 @@
 package kea.sem3.jwtdemo.entity;
 
+import kea.sem3.jwtdemo.dto.MemberRequest;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -27,6 +28,18 @@ public class Member extends BaseUser {
     }
 
     public Member() {
+    }
+
+    public Member (MemberRequest body){
+        super(body.getUsername(), body.getEmail(),body.getPassword());
+        this.firstName = body.getFirstName();
+        this.lastName = body.getLastName();
+        this.street = body.getStreet();
+        this.city = body.getCity();
+        this.zip = body.getZip();
+        this.approved = body.isApproved();
+        this.firstName = body.getRanking();
+
     }
 
     @Column

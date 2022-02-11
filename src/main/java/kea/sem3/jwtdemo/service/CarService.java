@@ -15,10 +15,10 @@ import java.util.List;
         public CarService(CarRepository carRepository) {
             this.carRepository = carRepository;
         }
+
         public List<CarResponse> getCars(){
             List<Car> cars = carRepository.findAll();
             return CarResponse.getCarsFromEntities(cars);
-
         }
         public CarResponse getCar(int id,boolean all) throws Exception {
             //Car car = carRepository.findById(id).orElseThrow(()->new Exception("not found"));
