@@ -26,7 +26,7 @@ class MemberServiceInMemoryTest {
 
         memberService = new MemberService(memberRepository);
 
-        mem1ID= memberRepository.save(new Member("m", "m@d.kl"))
+        //mem1ID= memberRepository.save(new Member("m", "m@d.kl", "nisse", false, ""))
     }
 
     @Test
