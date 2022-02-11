@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 @Controller
+/*Denne annotation gør, at netop denne test ikke skal køres*/
 @Profile("!test")
 public class MakeTestData implements ApplicationRunner {
 

@@ -30,6 +30,7 @@ class CarServiceInMemoryTest
 /* @BeforeEach: Denne annotation, sørger for at data rolles tilabge*/
    @BeforeAll
     static void setup(@Autowired CarRepository carRepository ){
+       /*Hvis ting ikke virker gør sådan: carRepository.deleteAll(); */
         car1Id = carRepository.save(new Car("Volvo", "C40", 560,10)).getId();
         car2Id = carRepository.save(new Car("WW", "Up", 300,10)).getId();
     }
