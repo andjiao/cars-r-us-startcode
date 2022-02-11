@@ -13,6 +13,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
+//Den skal hedde test til sidst for at kunne kører, tror jeg...????
+
 @Entity (name="cars")
 public class Car {
     @Id
@@ -32,8 +34,7 @@ public class Car {
     private Double bestDiscount;
 
 
-    public Car(int id, String brand, String model, double pricePrDay, double discount) {
-        this.id = id;
+    public Car(String brand, String model, double pricePrDay, double discount) {
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
@@ -41,7 +42,6 @@ public class Car {
     }
 
     public Car(CarRequest body) {
-        this.id = id;
         this.brand = body.getBrand();
         this.model = body.getModel();
         this.pricePrDay = body.getPricePrDay();

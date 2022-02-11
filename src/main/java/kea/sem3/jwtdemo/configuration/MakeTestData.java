@@ -42,6 +42,8 @@ public class MakeTestData implements ApplicationRunner {
         m1.addRole(Role.USER);
         memberRepository.save(m1);
 
+        memberRepository.save(new Member("niels","mia@d.fk","test123","Mia","jeg","3","3",1,true,"23"));
+
 
         System.out.println("########################################################################################");
         System.out.println("########################################################################################");
@@ -57,10 +59,10 @@ public class MakeTestData implements ApplicationRunner {
 
     public void makeCar(){
 
-        Car c1 = new Car(1,"karen","niels",90.00,15.00);
+        Car c1 = new Car("karen","niels",90.00,15.00);
         carRepository.save(c1);
 
-        Car c2 = new Car(2,"kurt","alice",09.00,18.00);
+        Car c2 = new Car("kurt","alice",09.00,18.00);
         carRepository.save(c2);
 
     }
