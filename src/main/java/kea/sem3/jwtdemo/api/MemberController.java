@@ -16,6 +16,11 @@ import java.util.List;
 @RequestMapping("api/members")
 public class MemberController {
 
+    /*Bruger skal have lov til at kunne ændre på sine egne data, med undtagelse af id.
+    * Admin skal have lov til at kunne ændre på det hele.
+    * Bruger skal ikke have lov til at se informationer på andre end sig selv
+    Admin skal gerne kunne se det hele*/
+
     MemberService memberService;
 
     public MemberController(MemberService memberService) {
@@ -31,7 +36,6 @@ public class MemberController {
     public MemberResponse getMember(@PathVariable String username) throws Exception {
 
         return memberService.getMember(username,false);}
-
 
     @PostMapping
     public MemberResponse addMember(@RequestBody MemberRequest body){
