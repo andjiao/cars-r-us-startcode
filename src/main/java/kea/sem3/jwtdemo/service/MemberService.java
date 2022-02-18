@@ -3,11 +3,15 @@ package kea.sem3.jwtdemo.service;
 import kea.sem3.jwtdemo.dto.MemberRequest;
 import kea.sem3.jwtdemo.dto.MemberResponse;
 import kea.sem3.jwtdemo.entity.Member;
+import kea.sem3.jwtdemo.entity.Role;
 import kea.sem3.jwtdemo.error.Client4xxException;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class MemberService {
@@ -17,19 +21,34 @@ public class MemberService {
         this.memberRepository=memberRepository;
     }
 
-    public List<MemberResponse> getMemebers(){
-        List<Member> memebers = memberRepository.findAll();
-        return  MemberResponse.getMemberEntities(memebers);
+    public List<MemberResponse> getAllMembers(){
+        List<Member> members = memberRepository.findAll();
+        return  members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
     }
 
-    public MemberResponse getMember(String username, boolean all) throws Exception {
+    public MemberResponse getMemberByUserName(String username) {
+        Member member = memberRepository.findById(username).orElseThrow(() -> new Client4xxException("User not found", HttpStatus.NOT_FOUND));
+        return new MemberResponse(member,false);
+    }
+
+    /*public MemberResponse getMembers(String username, boolean all) throws Exception {
         Member m1 = memberRepository.findById(username).orElseThrow(()->new Client4xxException("not found"));
         return new MemberResponse(m1,false);
-    }
+    }*/
 
-    public MemberResponse addMember(MemberRequest body){
-        Member memberNew = memberRepository.save(new Member(body));
-        return new MemberResponse(memberNew,true);
+
+    public MemberResponse addMember(MemberRequest body) {
+
+        if (memberRepository.existsById((body.getUsername()))) {
+            throw new Client4xxException("Provided user name is taken");
+        }
+        if (memberRepository.emailExist(body.getEmail())) {
+            throw new Client4xxException("Provided email is taken");
+        }
+        Member member = new Member(body);
+        member.addRole(Role.USER);
+        member = memberRepository.save(member);
+        return new MemberResponse(member.getUsername(), member.getCreated(), member.getRoles());
     }
 
 
@@ -58,3 +77,29 @@ public class MemberService {
         memberRepository.deleteById(username);
     }
 }
+
+/*
+
+@Service
+public class MemberService {
+
+   MemberRepository memberRepository;
+
+   public MemberService(MemberRepository memberRepository) {
+       this.memberRepository = memberRepository;
+   }
+
+   public List<MemberResponse> getMembers() {
+       List<Member> members = memberRepository.findAll();
+       return members.stream().map(member -> new MemberResponse(member,false)).collect(Collectors.toList());
+   }
+
+   public MemberResponse getMemberByUserName(String username) {
+       Member member = memberRepository.findById(username).orElseThrow(() -> new Client4xxException("User not found", HttpStatus.NOT_FOUND));
+       return new MemberResponse(member,false);
+   }
+
+
+   }
+}
+*/

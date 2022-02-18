@@ -33,10 +33,22 @@ import java.util.List;
             // skal det være false
             return new CarResponse(carNew, true) ;
         }
-        public CarResponse editCar(CarRequest body,int id){
-            return null;
+
+        public CarResponse editCar( CarRequest carToEdit, int carId){
+            Car car = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No car with provided ID found"));
+            car.setBrand(carToEdit.getBrand());
+            car.setModel(carToEdit.getModel());
+            car.setPricePrDay(carToEdit.getPricePrDay());
+           return new CarResponse(carRepository.save(car),true) ;
         }
-        public void deleteCar(int id) {
+
+        //Service method for PATCH
+        public void updatePrice(int carId, double newPricePrDay){
+            Car car = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No car with provided ID found"));
+            car.setPricePrDay(newPricePrDay);
+            carRepository.save(car);
         }
+
+
     }
 

@@ -7,8 +7,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("MEMBER")
@@ -30,16 +33,31 @@ public class Member extends BaseUser {
     public Member() {
     }
 
-    public Member (MemberRequest body){
-        super(body.getUsername(), body.getEmail(),body.getPassword());
-        this.firstName = body.getFirstName();
-        this.lastName = body.getLastName();
-        this.street = body.getStreet();
-        this.city = body.getCity();
-        this.zip = body.getZip();
-        this.approved = body.isApproved();
-        this.firstName = body.getRanking();
+    public Member (String username, String email, String password,String firstname, String lastname, String street, String city, int zip){
+        super(username, email, password);
 
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
+
+        this.approved = false;
+        this.ranking = "5";
+    }
+
+
+    public Member(MemberRequest body) {
+        this(body.getUsername(),body.getEmail(),body.getPassword(),body.getFirstName(),body.getLastName(),body.getStreet(),body.getCity(),body.getZip());
+    }
+
+    @OneToMany(mappedBy = "reservedBy")
+    private Set<Reservation> reservations = new HashSet<>();
+
+
+
+    public void addResevertaion (Reservation res){
+        reservations.add(res);
     }
 
     @Column
@@ -59,6 +77,7 @@ public class Member extends BaseUser {
         this.zip = zip;
         this.approved = approved;
         this.ranking = ranking;
+
     }
 
 
@@ -133,6 +152,8 @@ public class Member extends BaseUser {
     public void setLastEdited(LocalDateTime lastEdited) {
         this.lastEdited = lastEdited;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

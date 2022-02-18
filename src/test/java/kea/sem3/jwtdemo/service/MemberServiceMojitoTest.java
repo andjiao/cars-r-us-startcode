@@ -37,7 +37,7 @@ class MemberServiceMojitoTest {
                 new Member("hej","ella@k.dk","test123","alfa","jens","kisser","juletræ",30,true,"øl"),
                 new Member("Coolio","mia@k.dk","test123","omega","åse","yver","zebra",70,true,"æble")
         ));
-        List<MemberResponse> members = memberService.getMemebers();
+        List<MemberResponse> members = memberService.getAllMembers();
         assertEquals(2,members.size());
     }
 
@@ -47,9 +47,9 @@ class MemberServiceMojitoTest {
         Member member = new Member("radius","rella@k.dk","test123","ralfa","rjens","rkisser","rjuletræ",50,true,"røl");
         member.setUsername("roll");
         Mockito.when(memberRepository.findById("roll")).thenReturn(Optional.of(member));
-        MemberResponse memRes = memberService.getMember("roll", false);
+        MemberResponse memRes = memberService.getMemberByUserName("roll");
 
-        //assertEquals("rella@k.dk", memRes.getEmial());
+        assertEquals("ralfa", memRes.getFirstName());
 
     }
 

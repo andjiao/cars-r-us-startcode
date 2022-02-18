@@ -3,11 +3,14 @@ package kea.sem3.jwtdemo.configuration;
 import kea.sem3.jwtdemo.entity.*;
 import kea.sem3.jwtdemo.repositories.CarRepository;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
+import kea.sem3.jwtdemo.repositories.ReservationReporsitory;
 import kea.sem3.jwtdemo.security.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
+
+import java.time.LocalDate;
 
 @Controller
 /*Denne annotation gør, at netop denne test ikke skal køres*/
@@ -18,11 +21,13 @@ public class MakeTestData implements ApplicationRunner {
     UserRepository userRepository;
     MemberRepository memberRepository;
     CarRepository carRepository;
+    ReservationReporsitory reservationReporsitory;
 
-    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository) {
+    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository, ReservationReporsitory reservationReporsitory) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
+        this.reservationReporsitory= reservationReporsitory;
     }
 
     public void makePlainUsers(){
@@ -40,10 +45,33 @@ public class MakeTestData implements ApplicationRunner {
         userRepository.save(both);
 
         Member m1 = new Member("xx","mail@k.dk","test123", "kurt","niels","3","3",1,true,"23");
+        Member m2 = new Member("yy","alice@k.dk","test123", "kurt","niels","3","3",1,true,"23");
         m1.addRole(Role.USER);
         memberRepository.save(m1);
 
         memberRepository.save(new Member("niels","mia@d.fk","test123","Mia","jeg","3","3",1,true,"23"));
+
+        Car carVolvo = new Car("Volvo","niels",90.00, 10.00 );
+        carRepository.save(new Car("Volvo", "V70", 500,10));
+        carRepository.save(new Car("Volvo", "V49", 400,10));
+        carRepository.save(new Car("Suzuki", "Vitara", 500,14));
+        carRepository.save(new Car("Suzuki", "Vitara", 500,14));
+        carRepository.save(new Car("Suzuki", "S-Cross", 500,14));
+
+
+//Create a Reservation
+        Reservation res1 = new Reservation(LocalDate.of(2022,3,1),carVolvo,m1);
+        reservationReporsitory.save(res1);
+        Reservation res = reservationReporsitory.
+                findReservationByReservedCar_IdAndRentalDate(carVolvo.getId(),(LocalDate.of(2022,3,1)));
+        if(res == null) {
+
+            Reservation res2 = new Reservation(LocalDate.of(2022, 3, 1), carVolvo, m2);
+            reservationReporsitory.save(res2);
+        } else{
+            System.out.println("Car is reserved this day");
+        }
+
 
 
         System.out.println("########################################################################################");

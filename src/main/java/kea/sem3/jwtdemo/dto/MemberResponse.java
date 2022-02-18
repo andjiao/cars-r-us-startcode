@@ -3,6 +3,7 @@ package kea.sem3.jwtdemo.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import kea.sem3.jwtdemo.entity.Member;
+import kea.sem3.jwtdemo.entity.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-
+/*include.non_null betyder at den kun tager værdier med som ikke er nul*/
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberResponse {
 
@@ -26,6 +27,7 @@ public class MemberResponse {
     int zip;
     boolean approved;
     String ranking;
+    List<String> roleNames;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
@@ -47,6 +49,13 @@ public class MemberResponse {
             this.created = member.getCreated();
             this.updated = member.getLastEdited();
         }
+    }
+    public MemberResponse(String username, LocalDateTime created, List<Role> roleList) {
+        this.created= created;
+        this.roleNames=roleList.stream().map(role -> role.toString()).collect(Collectors.toList());
+        this.username=username;
+
+
     }
 
     public static List<MemberResponse> getMemberEntities (List<Member> members){

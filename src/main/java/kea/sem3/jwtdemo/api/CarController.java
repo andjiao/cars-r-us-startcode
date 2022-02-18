@@ -34,7 +34,15 @@ import java.util.List;
         }
 
         @PutMapping("/{id}")
-        public CarResponse editCar(@RequestBody CarRequest body, @PathVariable int id){return null;}
+        public CarResponse editCar(@RequestBody CarRequest body, @PathVariable int id){
+            return carService.editCar(body,id);
+        }
+
+
+    @PatchMapping("/{id}/{newprice}")
+    public void editPrice(@PathVariable int id, @PathVariable double newPrice) throws Exception {
+            carService.updatePrice(id, newPrice);
+    }
 
         @DeleteMapping("/{id}")
         public void deleteCar(@PathVariable int id){}

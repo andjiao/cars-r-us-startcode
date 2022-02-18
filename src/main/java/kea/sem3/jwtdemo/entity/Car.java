@@ -2,6 +2,10 @@ package kea.sem3.jwtdemo.entity;
 
 
 import kea.sem3.jwtdemo.dto.CarRequest;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,10 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 //Den skal hedde test til sidst for at kunne kører, tror jeg...????
-
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 @Entity (name="cars")
 public class Car {
     @Id
@@ -60,6 +69,14 @@ public class Car {
     @UpdateTimestamp
     private LocalDateTime dateEdited;
 
+    //if problems related to transaction, use eager
+
+    @OneToMany(mappedBy = "reservedCar", fetch = FetchType.EAGER)
+    private Set<Reservation> reservations = new HashSet<>();
+
+    public void addResevertaion (Reservation res){
+        reservations.add(res);
+    }
 
 
 
