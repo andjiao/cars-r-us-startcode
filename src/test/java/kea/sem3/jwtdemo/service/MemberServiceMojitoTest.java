@@ -49,7 +49,7 @@ class MemberServiceMojitoTest {
         Mockito.when(memberRepository.findById("roll")).thenReturn(Optional.of(member));
         MemberResponse memRes = memberService.getMemberByUserName("roll");
 
-        assertEquals("ralfa", memRes.getFirstName());
+        assertEquals("roll", memRes.getUsername());
 
     }
 
