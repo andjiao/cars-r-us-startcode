@@ -1,10 +1,15 @@
 package kea.sem3.jwtdemo.entity;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
 
 @Entity
 public class Reservation {
@@ -17,10 +22,12 @@ public class Reservation {
     public Reservation() {
     }
 
+    @Column (name = "reservationDate")
     @CreationTimestamp
-    LocalDateTime created;
+    LocalDate reservationDate;
 
-    LocalDate rentalDate;
+    @Column (name = "rentalDate")
+    private LocalDate rentalDate;
 
     @ManyToOne
     Car reservedCar;
@@ -29,7 +36,7 @@ public class Reservation {
     Member reservedBy;
 
     public Reservation(LocalDate date, Car reservedCar, Member reservedBy) {
-        this.rentalDate = date;
+        this.reservationDate = date;
         this.reservedCar = reservedCar;
         this.reservedBy = reservedBy;
         reservedCar.addResevertaion(this);

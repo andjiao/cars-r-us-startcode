@@ -39,8 +39,8 @@ import java.util.List;
         }
 
 
-    @PatchMapping("/{id}/{newprice}")
-    public void editPrice(@PathVariable int id, @PathVariable double newPrice) throws Exception {
+    @PatchMapping("/{id}/{newPrice}")
+    public void updatePrice(@PathVariable int id, @PathVariable double newPrice) throws Exception {
             carService.updatePrice(id, newPrice);
     }
 

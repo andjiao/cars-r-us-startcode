@@ -48,10 +48,13 @@ public class MakeTestData implements ApplicationRunner {
         Member m2 = new Member("yy","alice@k.dk","test123", "kurt","niels","3","3",1,true,"23");
         m1.addRole(Role.USER);
         memberRepository.save(m1);
+        memberRepository.save(m2);
 
         memberRepository.save(new Member("niels","mia@d.fk","test123","Mia","jeg","3","3",1,true,"23"));
 
         Car carVolvo = new Car("Volvo","niels",90.00, 10.00 );
+        carRepository.save(carVolvo);
+
         carRepository.save(new Car("Volvo", "V70", 500,10));
         carRepository.save(new Car("Volvo", "V49", 400,10));
         carRepository.save(new Car("Suzuki", "Vitara", 500,14));
@@ -59,15 +62,18 @@ public class MakeTestData implements ApplicationRunner {
         carRepository.save(new Car("Suzuki", "S-Cross", 500,14));
 
 
+
+
 //Create a Reservation
-        Reservation res1 = new Reservation(LocalDate.of(2022,3,1),carVolvo,m1);
+
+        Reservation res1 = new Reservation(LocalDate.of(2022,03,01),carVolvo,m1);
         reservationReporsitory.save(res1);
         Reservation res = reservationReporsitory.
                 findReservationByReservedCar_IdAndRentalDate(carVolvo.getId(),(LocalDate.of(2022,3,1)));
         if(res == null) {
-
-            Reservation res2 = new Reservation(LocalDate.of(2022, 3, 1), carVolvo, m2);
+            Reservation res2 = new Reservation(LocalDate.of(2022, 03, 01), carVolvo, m2);
             reservationReporsitory.save(res2);
+
         } else{
             System.out.println("Car is reserved this day");
         }
