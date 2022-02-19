@@ -25,6 +25,7 @@ public class Member extends BaseUser {
     boolean approved;
     String ranking;
 
+
     public Member(String username, String email, String password, String firstName) {
         super(username, email, password);
         this.firstName = firstName;
@@ -54,8 +55,6 @@ public class Member extends BaseUser {
     @OneToMany(mappedBy = "reservedBy")
     private Set<Reservation> reservations = new HashSet<>();
 
-
-
     public void addResevertaion (Reservation res){
         reservations.add(res);
     }
@@ -80,6 +79,13 @@ public class Member extends BaseUser {
 
     }
 
+    //getting acces to attributes from parent-class
+    public String getUsername() {
+        return super.getUsername();
+    }
+    public String getEmail(){
+        return super.getEmail();
+    }
 
     public String getFirstName() {
         return firstName;
@@ -167,4 +173,5 @@ public class Member extends BaseUser {
     public int hashCode() {
         return Objects.hash(firstName, lastName, street, city, zip, approved, ranking, created, lastEdited);
     }
+
 }

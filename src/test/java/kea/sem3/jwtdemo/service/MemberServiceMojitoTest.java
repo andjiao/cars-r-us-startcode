@@ -32,7 +32,7 @@ class MemberServiceMojitoTest {
 
     @Test
     //Læg mærke til ay her er det i flertal, altså flere memberS
-    void getMemebers() {
+    void getMembers() {
         Mockito.when(memberRepository.findAll()).thenReturn(List.of(
                 new Member("hej","ella@k.dk","test123","alfa","jens","kisser","juletræ",30,true,"øl"),
                 new Member("Coolio","mia@k.dk","test123","omega","åse","yver","zebra",70,true,"æble")
@@ -53,15 +53,15 @@ class MemberServiceMojitoTest {
 
     }
 
-    @Test
+    //@Test
     void addMember() {
     }
 
-    @Test
+    //@Test
     void editMember() {
     }
 
-    @Test
+    //@Test
     void deleteMember() {
     }
 

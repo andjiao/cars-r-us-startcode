@@ -39,7 +39,7 @@ class MemberServiceInMemoryTest {
     }
 
     //@Test
-    void getMemebers() {
+    void getMembers() {
         List<MemberResponse> memberResponses = memberService.getAllMembers();
         /*Der forventes to, da der i metoden setUp er blevet instansieret 2 memberobjekter*/
 

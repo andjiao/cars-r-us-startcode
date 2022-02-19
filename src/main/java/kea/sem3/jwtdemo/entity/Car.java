@@ -2,10 +2,7 @@ package kea.sem3.jwtdemo.entity;
 
 
 import kea.sem3.jwtdemo.dto.CarRequest;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -72,6 +69,9 @@ public class Car {
     //if problems related to transaction, use eager
 
     @OneToMany(mappedBy = "reservedCar", fetch = FetchType.EAGER)
+    // Removes the Getter & Setter for this
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
     private Set<Reservation> reservations = new HashSet<>();
 
     public void addResevertaion (Reservation res){
