@@ -17,7 +17,7 @@ class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
     @BeforeAll
-    void setUp(@Autowired MemberRepository memberRepository) {
+    static void setUp(@Autowired MemberRepository memberRepository) {
         /*deleteAll bruges for at sikre at der ikke er flere instansieret objekter, da der før denne pludslige var 45 objekter,
         selvom vi i denne metode kun instasiere to objekter*/
         memberRepository.deleteAll();
