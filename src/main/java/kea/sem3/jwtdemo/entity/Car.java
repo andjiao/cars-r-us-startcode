@@ -2,6 +2,13 @@ package kea.sem3.jwtdemo.entity;
 
 
 import kea.sem3.jwtdemo.dto.CarRequest;
+/*Project Lombok is a java library tool that
+is used to minimize/remove the boilerplate code and save the precious
+time of developers during development by just using some annotations.
+
+
+boilerplate =  boilerplate—are sections of code that are repeated in multiple places with little to no variation.*/
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -68,6 +75,7 @@ public class Car {
 
     //if problems related to transaction, use eager
 
+    // by deafult er værdien lazy i oneToMany
     @OneToMany(mappedBy = "reservedCar", fetch = FetchType.EAGER)
     // Removes the Getter & Setter for this
     @Setter(AccessLevel.NONE)

@@ -47,7 +47,15 @@ public class MemberController {
 
 
     @PutMapping("/{username}")
-    public MemberResponse editMember(@RequestBody MemberRequest body, @PathVariable String username){return null;}
+    public MemberResponse editMember(@RequestBody MemberRequest body, @PathVariable String username){
+        return memberService.editMember(body,username);
+    }
+
+    @PatchMapping("/{username}/{newEmail}")
+    /*Patch bruges, når kun en værdi skal ændres*/
+    public void updateEmail(@PathVariable String username, @PathVariable String newEmail) throws Exception{
+       memberService.updateEmail(username,newEmail);
+    }
 
     @DeleteMapping("/{username}")
     public void deleteMember(@PathVariable String username){

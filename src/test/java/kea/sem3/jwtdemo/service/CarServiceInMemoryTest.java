@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-/*Den laver kun de ting, der skal til for at kunne teste. Lavede en transtionel test (og kan rulles tilbage).
+/*Den laver kun de ting, der skal til for at kunne teste. Lavede en transtionel test (og kan rulles tilbage),
 Det er også denne der kobler til h2-databasen, altså en midlertidig DB. */
 @DataJpaTest
 class CarServiceInMemoryTest

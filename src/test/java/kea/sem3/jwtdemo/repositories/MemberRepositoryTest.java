@@ -17,6 +17,7 @@ class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
     @BeforeAll
+    //Remember fucking husk static
     static void setUp(@Autowired MemberRepository memberRepository) {
         /*deleteAll bruges for at sikre at der ikke er flere instansieret objekter, da der før denne pludslige var 45 objekter,
         selvom vi i denne metode kun instasiere to objekter*/
@@ -35,6 +36,14 @@ class MemberRepositoryTest {
     @Test
     public void testCount(){
         assertEquals(2, memberRepository.count());
-
     }
+
+    @Test
+    public void testAddMember(){
+        Member newMember = memberRepository.save(new Member("April","aprils@dk.dk","test123", "april","april","1","københavn",1,true,"23"));
+
+        assertEquals(3,memberRepository.count());
+        assertNotEquals(0,newMember.getUsername());
+    }
+
 }

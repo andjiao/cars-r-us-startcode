@@ -73,6 +73,12 @@ public class MemberService {
         return new MemberResponse(memberRepository.save(m1),true);
 
     }
+
+    public void updateEmail(String username, String newEmail){
+        Member member = memberRepository.findById(username).orElseThrow(()-> new Client4xxException("no user found with provided username"));
+        member.setEmail(newEmail);
+        memberRepository.save(member);
+    }
     public void deleteMember(String username){
         memberRepository.deleteById(username);
     }
