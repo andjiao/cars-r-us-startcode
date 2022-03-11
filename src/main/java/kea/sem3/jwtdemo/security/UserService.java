@@ -1,6 +1,5 @@
 package kea.sem3.jwtdemo.security;
 
-
 import kea.sem3.jwtdemo.entity.Role;
 import kea.sem3.jwtdemo.entity.BaseUser;
 import kea.sem3.jwtdemo.error.Client4xxException;

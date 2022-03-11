@@ -1,8 +1,8 @@
 package kea.sem3.jwtdemo.security.config;
 
+import kea.sem3.jwtdemo.security.UserDetailsServiceImp;
 import kea.sem3.jwtdemo.security.UserRepository;
 import kea.sem3.jwtdemo.security.UserWithPassword;
-import kea.sem3.jwtdemo.security.UserDetailsServiceImp;
 import kea.sem3.jwtdemo.security.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -103,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/reservation/free/{carId}/{date}").permitAll()
                 // All other endpoints are private
                 .anyRequest().authenticated();
-                //.anyRequest().permitAll();  //Disable Security
+        //.anyRequest().permitAll();  //Disable Security
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -104,23 +104,25 @@ class CarControllerTest {
 
     @Test
     public void testAddCar() throws Exception {
-        CarRequest newCar = new CarRequest("WW", "Polo", 200.0, 10.0);
+        CarRequest newCar = new CarRequest("WW", "Polo", 200, 10);
+        // System.out.println("XXXXXXX"+objectMapper.writeValueAsString(newCar));
         mockMvc.perform(MockMvcRequestBuilders.post("/api/cars")
                         .contentType("application/json")
                         .accept("application/json")
-                /*Det er denne linje, der laver java-objekter om til json,
-                ved at gøre brug af objectmapper(altså java-objekt) og omforme det til en string,
-                og i parantese tager vi altså java-objektet, newCar, til en String, altså en json*/
 
-                /*content er bodyen
-                hele princippet i api er at få request og få response*/
+                        /*Det er denne linje, der laver java-objekter om til json,
+                       ved at gøre brug af objectmapper(altså java-objekt) og omforme det til en string,
+                       og i parantese tager vi altså java-objektet, newCar, til en String, altså en json*/
+
+                        /*content er bodyen
+                        hele princippet i api er at få request og få response*/
                         .content(objectMapper.writeValueAsString(newCar)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
         //Verify that it actually ended in the database
         /*expected: altså hvor mange biler vi forventer at få retur*/
         assertEquals(3, carRepository.count());
-
 
     }
 

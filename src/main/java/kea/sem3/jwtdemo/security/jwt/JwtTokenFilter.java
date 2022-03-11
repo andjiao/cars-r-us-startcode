@@ -1,6 +1,5 @@
 package kea.sem3.jwtdemo.security.jwt;
 
-
 import kea.sem3.jwtdemo.security.UserDetailsImp;
 import kea.sem3.jwtdemo.security.UserRepository;
 import org.springframework.http.HttpHeaders;
@@ -57,8 +56,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 //                .findByUsername(jwtTokenUtil.getUsername(token))
 //                .orElse(null);
 
-       UserDetails userDetails = userRepository.findByUsername(jwtTokenUtil.getUsername(token))
-               .map(UserDetailsImp::new).orElse(null);
+        UserDetails userDetails = userRepository.findByUsername(jwtTokenUtil.getUsername(token))
+                .map(UserDetailsImp::new).orElse(null);
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(
