@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //Denne annotation omformes java til JSON, når det vises i browser
+@CrossOrigin
 @RestController
 
     @RequestMapping("api/cars")
