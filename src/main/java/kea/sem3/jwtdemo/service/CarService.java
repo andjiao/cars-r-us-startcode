@@ -35,11 +35,11 @@ import java.util.List;
         }
 
         public CarResponse editCar( CarRequest carToEdit, int carId){
-            Car car = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No car with provided ID found"));
-            car.setBrand(carToEdit.getBrand());
-            car.setModel(carToEdit.getModel());
-            car.setPricePrDay(carToEdit.getPricePrDay());
-           return new CarResponse(carRepository.save(car),true) ;
+            Car UpdatedCar = carRepository.findById(carId).orElseThrow(()-> new Client4xxException("No UpdatedCar with provided ID found"));
+            UpdatedCar.setBrand(carToEdit.getBrand());
+            UpdatedCar.setModel(carToEdit.getModel());
+            UpdatedCar.setPricePrDay(carToEdit.getPricePrDay());
+           return new CarResponse(carRepository.save(UpdatedCar),true) ;
         }
 
         //Service method for PATCH

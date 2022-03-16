@@ -1,10 +1,14 @@
 package kea.sem3.jwtdemo.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.util.TestUtils;
 import kea.sem3.jwtdemo.dto.CarRequest;
 import kea.sem3.jwtdemo.dto.CarResponse;
+import kea.sem3.jwtdemo.entity.BaseUser;
 import kea.sem3.jwtdemo.entity.Car;
+import kea.sem3.jwtdemo.entity.Role;
 import kea.sem3.jwtdemo.repositories.CarRepository;
+import kea.sem3.jwtdemo.security.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
+import static kea.sem3.jwtdemo.TestUtils.login;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,6 +46,9 @@ class CarControllerTest {
     @Autowired
     CarRepository carRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     //Do something here
 
     @Autowired
@@ -49,10 +57,16 @@ class CarControllerTest {
     static int carFordId, carSuzukiId;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         carRepository.deleteAll();
         carFordId = carRepository.save(new Car("Ford", "Focus", 400, 10)).getId();
         carSuzukiId = carRepository.save(new Car("Suzuki", "Vitara", 500, 14)).getId();
+
+        //Create user(s) needed to login to get a token for protected endpoints
+        userRepository.deleteAll();;
+        BaseUser admin = new BaseUser("xxx-user", "a@b.dk", "test12");
+        admin.addRole(Role.ADMIN);
+        userRepository.save(admin);
     }
 
     @Test
@@ -103,28 +117,32 @@ class CarControllerTest {
     }
 
     @Test
-    public void testAddCar() throws Exception {
-        CarRequest newCar = new CarRequest("WW", "Polo", 200, 10);
+        public void testAddCar() throws Exception {
+            CarRequest newCar = new CarRequest("WW", "Polo", 200, 10);
+            //Login and get the token
+            String adminToken = TestUtils.login("xxx-user","test12",mockMvc);
+
         // System.out.println("XXXXXXX"+objectMapper.writeValueAsString(newCar));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/cars")
-                        .contentType("application/json")
-                        .accept("application/json")
+            mockMvc.perform(MockMvcRequestBuilders.post("/api/cars")
+                            .contentType("application/json")
+                            .accept("application/json")
+                            .header("Authorization","Bearer "+adminToken) // //Add token to the request
 
-                        /*Det er denne linje, der laver java-objekter om til json,
-                       ved at gøre brug af objectmapper(altså java-objekt) og omforme det til en string,
-                       og i parantese tager vi altså java-objektet, newCar, til en String, altså en json*/
+                            /*Det er denne linje, der laver java-objekter om til json,
+                              ved at gøre brug af objectmapper(altså java-objekt) og omforme det til en string,
+                              og i parantese tager vi altså java-objektet, newCar, til en String, altså en json*/
 
-                        /*content er bodyen
-                        hele princippet i api er at få request og få response*/
-                        .content(objectMapper.writeValueAsString(newCar)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-        //Verify that it actually ended in the database
+                            /*content er bodyen
+                            hele princippet i api er at få request og få response*/
+                            .content(objectMapper.writeValueAsString(newCar)))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+            //Verify that it actually ended in the database
         /*expected: altså hvor mange biler vi forventer at få retur*/
-        assertEquals(3, carRepository.count());
+            assertEquals(3, carRepository.count());
 
-    }
+        }
 
     // @Test
     public void editCar() throws Exception {}

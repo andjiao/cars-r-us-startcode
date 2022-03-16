@@ -55,7 +55,6 @@ public class MemberResponse {
         this.roleNames=roleList.stream().map(role -> role.toString()).collect(Collectors.toList());
         this.username=username;
 
-
     }
 
     public static List<MemberResponse> getMemberEntities (List<Member> members){
